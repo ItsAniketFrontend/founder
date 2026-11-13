@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Founders Network Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f7f4;
+    --surface: #ffffff;
+    --surface-2: #f0f1ec;
+    --text: #17181c;
+    --muted: #5f6470;
+    --border: #e3e4de;
+    --accent: #2f5bea;
+    --accent-soft: #e7edff;
+    --on-accent: #ffffff;
+    --good: #1f8a52;
+    --good-soft: #e2f5ea;
+    --warn: #b7791f;
+    --warn-soft: #fdf2df;
+    --bad: #c24141;
+    --bad-soft: #fbe9e9;
+    --shadow: 0 1px 2px rgba(20,20,30,.04), 0 8px 24px rgba(20,20,30,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101114; --surface: #181a1f; --surface-2: #20232a; --text: #ecedf0; --muted: #a0a6b3;
+      --border: #2b2f38; --accent: #8aa4ff; --accent-soft: #1f2640; --on-accent: #101114;
+      --good: #5cc993; --good-soft: #153a26; --warn: #e8b05a; --warn-soft: #3a2c12;
+      --bad: #f08a8a; --bad-soft: #3d1c1c; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101114; --surface: #181a1f; --surface-2: #20232a; --text: #ecedf0; --muted: #a0a6b3;
+    --border: #2b2f38; --accent: #8aa4ff; --accent-soft: #1f2640; --on-accent: #101114;
+    --good: #5cc993; --good-soft: #153a26; --warn: #e8b05a; --warn-soft: #3a2c12;
+    --bad: #f08a8a; --bad-soft: #3d1c1c; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.55 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+
+  .slide {
+    min-height: 100vh; scroll-snap-align: start;
+    display: flex; align-items: center; padding: 64px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .inner { width: 100%; max-width: 1120px; margin: 0 auto; }
+  .tag { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.08; letter-spacing: -.025em; margin: 0 0 18px; font-weight: 800; }
+  h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 10px; font-weight: 700; }
+  .lead { font-size: clamp(18px, 2vw, 22px); color: var(--muted); max-width: 720px; margin: 0 0 36px; }
+  .small { font-size: 14px; color: var(--muted); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; font-weight: 500; font-size: 15px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; box-shadow: var(--shadow); }
+  .icon { font-size: 30px; line-height: 1; margin-bottom: 12px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+  /* Step flow */
+  .flow { display: flex; align-items: stretch; width: 100%; }
+  .step {
+    flex: 1 1 0; min-width: 0; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 16px; text-align: center; box-shadow: var(--shadow); position: relative;
+  }
+  .step .n {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: var(--on-accent); font-size: 13px; font-weight: 700;
+    width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  }
+  .step .icon { font-size: 34px; margin: 6px 0 10px; }
+  .step b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .step span { display: block; font-size: 14px; color: var(--muted); }
+  .arrow { flex: 0 0 34px; display: grid; place-items: center; color: var(--muted); font-size: 22px; }
+  @media (max-width: 820px) {
+    .flow { flex-direction: column; }
+    .step { text-align: left; padding: 18px 56px 18px 60px; }
+    .step .n { left: 18px; top: 50%; transform: translateY(-50%); }
+    .step .icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); margin: 0; font-size: 28px; }
+    .arrow { flex-basis: 30px; transform: rotate(90deg); }
+  }
+
+  /* Branching chart */
+  .branchy { display: grid; justify-items: center; }
+  .branchy .flow { max-width: 900px; }
+  .down { color: var(--muted); font-size: 22px; height: 40px; display: grid; place-items: center; }
+  .decision {
+    background: var(--warn-soft); border: 2px solid var(--warn);
+    border-radius: 16px; padding: 16px 26px; font-weight: 600; text-align: center; max-width: 440px;
+  }
+  .decision small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: 900px; }
+  .branch { display: grid; justify-items: center; align-content: start; }
+  .label { font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin: 6px 0; }
+  .label.yes { background: var(--good-soft); color: var(--good); }
+  .label.no { background: var(--bad-soft); color: var(--bad); }
+  .result { width: 100%; border-radius: 16px; padding: 16px 18px; text-align: center; border: 2px solid; }
+  .result b { display: block; font-size: 17px; }
+  .result span { font-size: 14.5px; color: var(--muted); }
+  .result.ok { background: var(--good-soft); border-color: var(--good); }
+  .result.neutral { background: var(--surface); border-color: var(--border); }
+  .result.no { background: var(--bad-soft); border-color: var(--bad); }
+  .mini { display: flex; gap: 10px; width: 100%; }
+  .mini .result { flex: 1; padding: 12px; }
+  @media (max-width: 640px) { .branches { grid-template-columns: 1fr; gap: 8px; } }
+
+  /* Grids */
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  @media (max-width: 980px) { .grid5 { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 820px) { .grid3, .grid5 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .grid3, .grid5 { grid-template-columns: 1fr; } }
+
+  /* App sections */
+  .tab { border-top: 4px solid var(--accent); padding: 20px; }
+  .tab ul { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .tab li { font-size: 14.5px; color: var(--muted); padding-left: 16px; position: relative; }
+  .tab li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* Four-column grid */
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 980px) { .grid4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .grid4 { grid-template-columns: 1fr; } }
+
+  /* Timeline */
+  .timeline { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; gap: 12px; }
+  .timeline::before { content: ""; position: absolute; top: 15px; left: 10%; right: 10%; height: 3px; background: var(--border); }
+  .tl { text-align: center; position: relative; }
+  .tl .dot { width: 32px; height: 32px; border-radius: 50%; margin: 0 auto 14px; background: var(--surface); border: 3px solid var(--accent); display: grid; place-items: center; font-size: 14px; position: relative; }
+  .tl.launch .dot { background: var(--accent); }
+  .tl .when { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+  .tl b { display: block; font-size: 16px; margin: 4px 0; }
+  .tl span { font-size: 14px; color: var(--muted); display: block; }
+  @media (max-width: 820px) {
+    .timeline { grid-template-columns: 1fr; gap: 18px; }
+    .timeline::before { top: 0; bottom: 0; left: 15px; right: auto; width: 3px; height: auto; }
+    .tl { text-align: left; padding-left: 50px; }
+    .tl .dot { position: absolute; left: 0; top: 0; margin: 0; }
+  }
+  .grow { margin-top: 36px; }
+  .grow > h3 { font-size: 18px; margin: 0 0 12px; }
+
+  /* Goals */
+  .goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 8px 0 44px; }
+  @media (max-width: 700px) { .goals { grid-template-columns: 1fr; } }
+  .goal .big { font-size: 44px; font-weight: 800; color: var(--accent); letter-spacing: -.02em; line-height: 1.1; }
+  .goal p { margin-top: 6px; }
+  .thanks { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -.02em; margin: 0; }
+
+  /* Presenter controls */
+  .hud {
+    position: fixed; right: 16px; bottom: 16px; z-index: 20; display: flex; gap: 6px; align-items: center;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px; box-shadow: var(--shadow);
+  }
+  .hud button {
+    border: 0; background: var(--surface-2); color: var(--text); width: 36px; height: 36px; border-radius: 50%;
+    font-size: 16px; cursor: pointer;
+  }
+  .hud button:hover { background: var(--accent-soft); color: var(--accent); }
+  .hud .count { font-size: 13px; color: var(--muted); padding: 0 8px; min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
+  @media print { .hud { display: none; } .slide { min-height: auto; page-break-after: always; } }
+</style>
+</head>
+<body>
+
+<!-- 1. Title -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">App walkthrough</div>
+    <h1>A private network<br>only for founders</h1>
+    <p class="lead">How the app works, step by step, and what members can do inside it.</p>
+    <div class="chips">
+      <span class="chip">✅ Verified founders only</span>
+      <span class="chip">💳 Paid membership</span>
+      <span class="chip">📱 Android &amp; iPhone</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Main flow -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Flow 1 · Joining</div>
+    <h2>From download to first connection</h2>
+    <p class="lead">What a new member goes through, in six simple steps.</p>
+    <div class="flow">
+      <div class="step"><div class="n">1</div><div class="icon">📲</div><b>Download</b><span>From Play Store or App Store</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">2</div><div class="icon">📞</div><b>Sign up</b><span>With mobile number &amp; OTP</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">3</div><div class="icon">🏢</div><b>Add startup</b><span>Company, stage, what you need</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">4</div><div class="icon">🔍</div><b>Get verified</b><span>We confirm you're a founder</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">5</div><div class="icon">💳</div><b>Become a member</b><span>Monthly or yearly plan</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n">6</div><div class="icon">🏠</div><b>Start networking</b><span>Meet and chat with founders</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Verification flow -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Flow 2 · Verification</div>
+    <h2>How we confirm someone is a real founder</h2>
+    <p class="lead">We check India's official company records, so every member can trust who they're talking to.</p>
+    <div class="branchy">
+      <div class="flow">
+        <div class="step"><div class="n">1</div><div class="icon">🧾</div><b>Enter company number</b><span>The startup's registration number</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="n">2</div><div class="icon">🏛️</div><b>Check government records</b><span>Company exists and is active</span></div>
+      </div>
+      <div class="down">↓</div>
+      <div class="decision">Is this person listed as a director of the company?<small>Checked automatically in seconds</small></div>
+      <div class="branches">
+        <div class="branch">
+          <div class="down">↓</div>
+          <div class="label yes">YES</div>
+          <div class="result ok"><b>✅ Approved instantly</b><span>Gets a "Verified Founder" badge</span></div>
+        </div>
+        <div class="branch">
+          <div class="down">↓</div>
+          <div class="label no">NO / NOT SURE</div>
+          <div class="result neutral"><b>👀 Our team reviews it</b><span>Website, pitch deck, LinkedIn · 1–2 days</span></div>
+          <div class="down">↓</div>
+          <div class="mini">
+            <div class="result ok"><b>✅ Approved</b></div>
+            <div class="result no"><b>❌ Declined</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Connection flow -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Flow 3 · Connecting</div>
+    <h2>How two founders connect</h2>
+    <p class="lead">Every request includes a personal note, so requests stay meaningful and never feel like spam.</p>
+    <div class="branchy">
+      <div class="flow">
+        <div class="step"><div class="n">1</div><div class="icon">🔎</div><b>Find a founder</b><span>From daily picks or search</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="n">2</div><div class="icon">✍️</div><b>Send a request</b><span>With a short note on why</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="n">3</div><div class="icon">🔔</div><b>They get notified</b><span>On their phone instantly</span></div>
+      </div>
+      <div class="down">↓</div>
+      <div class="decision">Do they accept the request?</div>
+      <div class="branches">
+        <div class="branch">
+          <div class="down">↓</div>
+          <div class="label yes">ACCEPT</div>
+          <div class="result ok"><b>🤝 You're connected</b><span>Both added to each other's network</span></div>
+          <div class="down">↓</div>
+          <div class="result neutral"><b>💬 Chat privately</b><span>One-to-one messages, photos &amp; files</span></div>
+        </div>
+        <div class="branch">
+          <div class="down">↓</div>
+          <div class="label no">IGNORE</div>
+          <div class="result neutral"><b>🤫 Quietly ignored</b><span>The sender is never told "rejected"</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Functions -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Functions</div>
+    <h2>What members can do</h2>
+    <p class="lead">Six main things the app lets founders do.</p>
+    <div class="grid3">
+      <div class="card"><div class="icon">✨</div><h3>5 picks every day</h3><p>Each morning the app suggests 5 founders worth meeting, based on what you need and what they offer.</p></div>
+      <div class="card"><div class="icon">🔎</div><h3>Search founders</h3><p>Filter by industry, city, company stage or what they're looking for.</p></div>
+      <div class="card"><div class="icon">🤝</div><h3>Connect with a note</h3><p>Send a personal request. A weekly limit keeps requests thoughtful.</p></div>
+      <div class="card"><div class="icon">💬</div><h3>Private chat</h3><p>Message your connections one-to-one, with notifications.</p></div>
+      <div class="card"><div class="icon">🙋</div><h3>Ask the community</h3><p>Post a need like "looking for a CTO" and get help from members.</p></div>
+      <div class="card"><div class="icon">🛡️</div><h3>Safety controls</h3><p>Report or block anyone. Delete your account and data any time.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. App sections -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Inside the app</div>
+    <h2>The 5 main sections</h2>
+    <p class="lead">These are the tabs at the bottom of the app and what each one contains.</p>
+    <div class="grid5">
+      <div class="card tab"><div class="icon">🏠</div><h3>Home</h3><ul><li>Today's 5 founder picks</li><li>Community asks</li></ul></div>
+      <div class="card tab"><div class="icon">🔍</div><h3>Discover</h3><ul><li>Search all founders</li><li>Filters by city, industry, stage</li></ul></div>
+      <div class="card tab"><div class="icon">🤝</div><h3>Network</h3><ul><li>My connections</li><li>Requests received &amp; sent</li></ul></div>
+      <div class="card tab"><div class="icon">💬</div><h3>Messages</h3><ul><li>All conversations</li><li>Private chat screen</li></ul></div>
+      <div class="card tab"><div class="icon">👤</div><h3>Me</h3><ul><li>My profile</li><li>Membership &amp; invoices</li><li>Privacy &amp; settings</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. What powers it -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Behind the scenes</div>
+    <h2>What powers the app</h2>
+    <p class="lead">Reliable, well-known services so we can build quickly and keep members safe.</p>
+    <div class="grid4">
+      <div class="card"><div class="icon">📱</div><h3>One app, two phones</h3><p>Built once and works on both Android and iPhone.</p></div>
+      <div class="card"><div class="icon">☁️</div><h3>Secure servers in India</h3><p>Member data is stored safely within India.</p></div>
+      <div class="card"><div class="icon">💳</div><h3>Trusted payments</h3><p>Google Play, App Store and Razorpay (UPI &amp; cards).</p></div>
+      <div class="card"><div class="icon">🏛️</div><h3>Official records</h3><p>Founder details are checked against government company data.</p></div>
+    </div>
+    <p class="small" style="margin-top:26px">For the tech team: Flutter · Supabase (Mumbai) · RevenueCat · Razorpay · MCA verification API · Firebase notifications</p>
+  </div>
+</section>
+
+<!-- 8. Launch plan -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Launch plan</div>
+    <h2>From idea to launch in about 4 months</h2>
+    <p class="lead">We start small in one city, get it right, then grow.</p>
+    <div class="timeline">
+      <div class="tl"><div class="dot">1</div><div class="when">Nov 2026</div><b>Set up</b><span>Company, payments, waitlist</span></div>
+      <div class="tl"><div class="dot">2</div><div class="when">Dec 2026</div><b>Design</b><span>Screens and user flow</span></div>
+      <div class="tl"><div class="dot">3</div><div class="when">Dec – Feb</div><b>Build the app</b><span>All core features</span></div>
+      <div class="tl"><div class="dot">4</div><div class="when">Feb – Mar</div><b>Test in Bangalore</b><span>With ~300 founders</span></div>
+      <div class="tl launch"><div class="dot">🚀</div><div class="when">Mar 2027</div><b>Public launch</b><span>Then Delhi, Mumbai, Pune, Hyderabad</span></div>
+    </div>
+    <div class="grow">
+      <h3>How we'll get our first members</h3>
+      <div class="grid3">
+        <div class="card"><div class="icon">🏫</div><h3>Startup incubators</h3><p>Partner with incubators and founder communities to invite their founders.</p></div>
+        <div class="card"><div class="icon">🎟️</div><h3>Invite-only start</h3><p>Joining by invite makes it feel exclusive and keeps quality high.</p></div>
+        <div class="card"><div class="icon">⭐</div><h3>Founding offer</h3><p>The first 500 members get a special lifetime price.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Goals + Thanks -->
+<section class="slide">
+  <div class="inner">
+    <div class="tag">Year one goals</div>
+    <h2>What success looks like</h2>
+    <p class="lead">Three numbers we'll track closely.</p>
+    <div class="goals">
+      <div class="card goal"><div class="big">500</div><p>Founding members in the first months</p></div>
+      <div class="card goal"><div class="big">4 in 10</div><p>Connection requests that get accepted</p></div>
+      <div class="card goal"><div class="big">95%</div><p>Members who stay with us each month</p></div>
+    </div>
+    <p class="thanks">Thank you 🙏</p>
+    <p class="lead" style="margin-top:8px">Questions &amp; ideas welcome.</p>
+  </div>
+</section>
+
+<div class="hud" aria-label="Slide controls">
+  <button type="button" id="prev" aria-label="Previous slide">↑</button>
+  <span class="count" id="count">1 / 9</span>
+  <button type="button" id="next" aria-label="Next slide">↓</button>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var countEl = document.getElementById('count');
+
+  function current() {
+    var mid = window.innerHeight / 3, idx = 0;
+    slides.forEach(function (s, i) { if (s.getBoundingClientRect().top <= mid) idx = i; });
+    return idx;
+  }
+  function go(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function update() { countEl.textContent = (current() + 1) + ' / ' + slides.length; }
+
+  document.getElementById('next').addEventListener('click', function () { go(current() + 1); });
+  document.getElementById('prev').addEventListener('click', function () { go(current() - 1); });
+  document.addEventListener('keydown', function (e) {
+    if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].indexOf(e.key) > -1) { e.preventDefault(); go(current() + 1); }
+    else if (['ArrowUp', 'ArrowLeft', 'PageUp'].indexOf(e.key) > -1) { e.preventDefault(); go(current() - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+  });
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>
